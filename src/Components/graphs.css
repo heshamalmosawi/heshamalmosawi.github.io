@@ -1,0 +1,16 @@
+.Receive-graph {
+    color: red;
+}
+
+.audit-receive-div {
+    width: 400px;
+    border: solid 1px white;
+    border-radius: 3px;
+    padding: 50px 0;
+}
+
+.piecharts{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

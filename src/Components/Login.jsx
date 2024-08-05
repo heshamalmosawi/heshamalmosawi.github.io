@@ -22,17 +22,19 @@ const Login = (prop) => {
       },
     }).then(async (resp) => {
       console.log("Response status: ", resp.status);
-      if (resp.status != 200) {
+      if (resp.status !== 200) {
         setErrorMsg('Invalid Credentials.');
         document.getElementById('pwd').innerHTML = "";
       } else {
         setErrorMsg('');
-        const token = await resp.text();
+        return await resp.json();
+      }})
+      .then((token) => {
         localStorage.setItem("token", token);
         prop.auth(true);
         console.log("Token:", token); //TODO: remove this
-      }
-    }).catch((error) => {
+      })
+    .catch((error) => {
       console.error("Error:", error);
       setErrorMsg('An error occurred.');
     });
