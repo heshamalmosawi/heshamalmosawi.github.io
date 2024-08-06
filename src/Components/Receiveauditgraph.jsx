@@ -1,7 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Doughnut } from "react-chartjs-2";
+import { PieChart, Pie, Legend, Cell, ResponsiveContainer, Label } from "recharts";
 import { url, queryReceiveAuditPass, queryReceiveAuditFail } from "./queries";
 import "./graphs.css";
+
+const Bullet = ({ backgroundColor, size }) => {
+  return (
+    <div
+      className="CirecleBullet"
+      style={{
+        backgroundColor,
+        width: size,
+        height: size,
+      }}
+    ></div>
+  );
+};
+
+const CustomizedLegend = (props) => {
+  const { payload } = props;
+  return (
+    <ul className="LegendList" style={{ listStyleType: 'none', padding: 0 }}>
+      {payload.map((entry, index) => (
+        <li key={`item-${index}`}>
+          <div className="BulletLabel">
+            <Bullet backgroundColor={entry.payload.fill} size="10px" />
+            <div className="BulletLabelText">{entry.value}</div>
+          </div>
+          <div style={{ marginLeft: "20px" }}>{entry.payload.value}</div>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 const ReceiveAudit = () => {
 
@@ -48,39 +78,34 @@ const ReceiveAudit = () => {
   console.log("pass count: ", passCount);
   console.log("fail count: ", failCount);
 
-  const options = {
-    plugins: {
-      legend: {
-        labels: {
-          color: '#FFFFFF' // Change this to the desired color
-        }
-      }
-    }
-  };
+  const COLORS = ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"];
 
-  let graphData = {
-    labels: ['Pass', 'Fail'],
-    datasets: [
-      {
-        data: [passCount, failCount],
-        backgroundColor: [
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-        ],
-        borderColor: [
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 99, 132, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+  let graphData = [
+    { name: "Pass", value: passCount }, { name: "Fail", value: failCount }
+  ]
 
   return (<div className="graph-div">
     <h2> Audits Received </h2>
-    <Doughnut
-      data={graphData} options={options}
-    />
+    <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={graphData}
+            dataKey="value"
+            cx={200}
+            cy={200}
+            innerRadius={80}
+            outerRadius={130}
+          >
+            {graphData.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+          <Legend content={<CustomizedLegend />} />
+        </PieChart>
+      </ResponsiveContainer>
   </div>)
 }
 
