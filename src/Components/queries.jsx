@@ -65,3 +65,23 @@ export const basicInfo = `{
         campus
     }
 }`;
+
+export const queryLastfive = `
+query {
+  transaction(
+    where: {
+      type: { _eq: "xp" }
+      _and: [
+        { path: { _like: "/bahrain/bh-module%" } },
+        { path: { _nlike: "/bahrain/bh-module/checkpoint%" } },
+        { path: { _nlike: "/bahrain/bh-module/piscine-js%" } }
+      ]
+    }
+    order_by: { createdAt: desc }
+    limit: 5
+  ) {
+    object {
+      name
+    }
+  }
+}`;

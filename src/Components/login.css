@@ -1,3 +1,7 @@
+* {
+    color:white;
+}
+
 /* Login */
 .container {
     display: flex;
