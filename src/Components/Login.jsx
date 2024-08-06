@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './login.css';
 
 import userIcon from './Assets/person.png';
@@ -6,6 +6,13 @@ import passIcon from './Assets/password.png';
 
 const Login = (prop) => {
 
+  useEffect(() => {
+    if (localStorage.getItem('token')) {
+      prop.auth(true);
+      return;
+    }
+  }, []);
+  
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async (event) => {

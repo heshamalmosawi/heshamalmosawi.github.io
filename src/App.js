@@ -9,8 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* {!logged? <Login auth={setLogged} /> : <Dashboard/>} */}
-      <Dashboard/>
+      {!logged? <Login auth={setLogged} /> : <Dashboard auth={setLogged}/>}
     </div>
   );
 }

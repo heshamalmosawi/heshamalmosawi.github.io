@@ -50,3 +50,7 @@
     padding: 8px 0 10px 3px;
     width: 69%;
     text-align: center;}
+
+#logout-btn{
+    width: 10px;
+}
