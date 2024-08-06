@@ -45,3 +45,23 @@ export const querySendAuditFail = `query Result {
         }
     }
 }`;
+
+export const querySkills = `query Transaction {
+    transaction(
+        where: { type: { _like: "skill%" } }
+        order_by: { progress: { updatedAt: desc } }
+    ) {
+        amount
+        originEventId
+        path
+        type
+    }
+}`;
+
+export const basicInfo = `{
+    user {
+        login
+        attrs
+        campus
+    }
+}`;

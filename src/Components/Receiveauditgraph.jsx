@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { url, queryReceiveAuditPass, queryReceiveAuditFail } from "./queries";
 import "./graphs.css";
@@ -6,40 +6,44 @@ import "./graphs.css";
 const ReceiveAudit = () => {
 
   // to set and use them out of the fetch functions
-  const [passCount, setPassCount] = useState();
-  const [failCount, setFailCount] = useState();
-  // let token = localStorage.getItem("token")
+  const [passCount, setPassCount] = useState(0);
+  const [failCount, setFailCount] = useState(0);
+  let token = localStorage.getItem("token");
 
   // getting data for graphs 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: queryReceiveAuditPass
+  useEffect(() => {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: queryReceiveAuditPass
+      })
     })
-  })
-    .then(response => response.json())
-    .then((data) => {
-      setPassCount(data.data.audit_aggregate.aggregate.count);
-    })
+      .then(response => response.json())
+      .then((data) => {
+        setPassCount(data.data.audit_aggregate.aggregate.count);
+      })
+  }, []);
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: queryReceiveAuditFail
+  useEffect(() => {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: queryReceiveAuditFail
+      })
     })
-  })
-    .then(response => response.json())
-    .then((data) => {
-      setFailCount(data.data.audit_aggregate.aggregate.count);
-    })
+      .then(response => response.json())
+      .then((data) => {
+        setFailCount(data.data.audit_aggregate.aggregate.count);
+      })
+  }, []);
 
   console.log("pass count: ", passCount);
   console.log("fail count: ", failCount);
@@ -71,8 +75,8 @@ const ReceiveAudit = () => {
       },
     ],
   };
-  // { title: 'Three', value: 20, color: '#6A2135' },
-  return (<div className="audit-receive-div">
+
+  return (<div className="graph-div">
     <h2> Audits Received </h2>
     <Doughnut
       data={graphData} options={options}

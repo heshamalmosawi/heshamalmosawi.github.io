@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { url, querySendAuditPass, querySendAuditFail } from "./queries";
 import "./graphs.css";
@@ -8,38 +8,41 @@ const SendAudit = () => {
     const [passCount, setPassCount] = useState();
     const [failCount, setFailCount] = useState();
 
+    let token = localStorage.getItem("token");
+    
+    useEffect(() => {
+        fetch(url, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: querySendAuditPass
+            })
+        })
+            .then(response => response.json())
+            .then((data) => {
+                setPassCount(data.data.user[0].audits_aggregate.aggregate.count);
+            })
+            .catch(error => console.error('Error:', error));
 
-    fetch(url, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            query: querySendAuditPass
+        fetch(url, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                query: querySendAuditFail
+            })
         })
-    })
-        .then(response => response.json())
-        .then((data) => {
-            setPassCount(data.data.user[0].audits_aggregate.aggregate.count);
-        })
-        .catch(error => console.error('Error:', error));
-
-    fetch(url, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            query: querySendAuditFail
-        })
-    })
-        .then(response => response.json())
-        .then((data) => {
-            setFailCount(data.data.user[0].audits_aggregate.aggregate.count);
-        })
-        .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then((data) => {
+                setFailCount(data.data.user[0].audits_aggregate.aggregate.count);
+            })
+            .catch(error => console.error('Error:', error));
+    }, []);
 
     const options = {
         plugins: {
@@ -69,7 +72,7 @@ const SendAudit = () => {
         ],
     };
     // { title: 'Three', value: 20, color: '#6A2135' },
-    return (<div className="audit-receive-div">
+    return (<div className="graph-div">
         <h2> Audits Done </h2>
         <Doughnut
             data={graphData} options={options}

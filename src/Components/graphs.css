@@ -2,7 +2,7 @@
     color: red;
 }
 
-.audit-receive-div {
+.graph-div {
     width: 400px;
     border: solid 1px white;
     border-radius: 3px;
@@ -11,6 +11,7 @@
 
 .piecharts{
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-evenly;
 }
