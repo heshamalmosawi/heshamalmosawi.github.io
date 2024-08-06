@@ -8,7 +8,7 @@ ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, 
 
 const SkillsGraph = () => {
 
-    let token = localStorage.getItem("token")
+    let token = localStorage.getItem("token");
 
     const [skills, setSkills] = useState({});
     useEffect(() => {
