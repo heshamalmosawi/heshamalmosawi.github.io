@@ -75,9 +75,6 @@ const ReceiveAudit = () => {
       })
   }, []);
 
-  console.log("pass count: ", passCount);
-  console.log("fail count: ", failCount);
-
   const COLORS = ["rgba(54, 162, 235, 0.2)", "rgba(255, 99, 132, 0.2)"];
 
   let graphData = [

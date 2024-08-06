@@ -35,7 +35,6 @@ const TechGraph = () => {
             })
     }, []);
 
-    // console.log(skills)
     const skillTypes = ["skill_go", "skill_c", "skill_html", "skill_css", "skill_js", "skill_docker", "skill_sql", "skill_graphql"];
     const chartData = skillTypes.map(type => skills[type] || 0);
     const data = {

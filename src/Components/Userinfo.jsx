@@ -44,7 +44,6 @@ const UserInfo = () => {
     );
 
 
-    // console.log(user.attrs)
 };
 
 export default UserInfo

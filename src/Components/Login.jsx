@@ -28,20 +28,22 @@ const Login = (prop) => {
         'Content-Type': 'application/json',
       },
     }).then(async (resp) => {
-      console.log("Response status: ", resp.status);
       if (resp.status !== 200) {
         setErrorMsg('Invalid Credentials.');
         document.getElementById('pwd').innerHTML = "";
+        return;
       } else {
         setErrorMsg('');
         return await resp.json();
       }})
       .then((token) => {
-        localStorage.setItem("token", token);
-        prop.auth(true);
-        console.log("Token:", token); //TODO: remove this
+        if (token){
+          localStorage.setItem("token", token);
+          prop.auth(true);
+        }
       })
     .catch((error) => {
+      prop.auth(false);
       console.error("Error:", error);
       setErrorMsg('An error occurred.');
     });
