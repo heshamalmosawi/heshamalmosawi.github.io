@@ -54,3 +54,12 @@
 #logout-btn{
     width: 10px;
 }
+
+#logout-btn {
+    width: fit-content;
+    margin: 0% 50%;
+    background-color: rgba(54, 162, 235, 0.4);
+    border-radius: 4px;
+    border: none;
+    padding: 10px;
+  }

@@ -43,11 +43,10 @@ const SkillsGraph = () => {
         datasets: [
             {
                 label: "Skill gained",
-                backgroundColor: "rgb(255, 99, 132)",
-                borderColor: "rgb(255, 99, 132)",
+                backgroundColor: "rgba(48, 144, 207, 0.6)",
+                borderColor: "rgba(48, 144, 207, 0.0)",
                 data: chartData,
-                pointBackgroundColor: 'rgba(0, 0, 0, 0)', // Point color
-                // pointHoverBackgroundColor: '#fff', // Point hover background color
+                pointRadius: 0,
             }
         ]
     };

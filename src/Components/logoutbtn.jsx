@@ -6,7 +6,7 @@ const Logoutbtn = ({ auth }) => {
         auth(false);
     };
 
-    return (<button onClick={handleLogout} id="logout-btn">Logout</button>)
+    return (<button onClick={handleLogout} id="logout-btn"><strong> Logout</strong></button>)
 };
 
 export default Logoutbtn
